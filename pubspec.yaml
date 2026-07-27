@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.1.0
-  agora_rtc_engine: ^6.3.0
+  agora_rtc_engine: ^6.6.3
   permission_handler: ^11.3.0
   cupertino_icons: ^1.0.0
 
