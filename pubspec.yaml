@@ -10,8 +10,9 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.1.0
-  agora_rtc_engine: ^6.6.3
-  permission_handler: ^11.3.0
+  zego_uikit_prebuilt_call:
+  zego_uikit_signaling_plugin:
+  permission_handler: ^12.0.3
   cupertino_icons: ^1.0.0
 
 dev_dependencies:

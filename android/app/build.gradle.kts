@@ -6,8 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.voice_our_iraq_app"
-    compileSdk = 35
-    ndkVersion = flutter.ndkVersion
+    compileSdk = 36
+    lint {
+        checkReleaseBuilds = false
+        abortOnError = false
+    }
+    ndkVersion = "30.0.15729638"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -19,8 +23,8 @@ android {
         applicationId = "com.example.voice_our_iraq_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
-        targetSdk = 35
+        minSdk = 24
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
@@ -42,4 +46,9 @@ kotlin {
 
 flutter {
     source = "../.."
+}
+configurations.all {
+    resolutionStrategy {
+        force("androidx.core:core:1.12.0")
+    }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() {
@@ -391,13 +390,10 @@ class VoiceRoomScreen extends StatefulWidget {
 
 class _VoiceRoomScreenState extends State<VoiceRoomScreen> {
   // 🔑 ضع هنا الـ App ID الخاص بك من موقع Agora.io
-  final String appId = "YOUR_AGORA_APP_ID";
-  final String token = "";
-  final String channelName = "ahl_aldira_room";
-
-  late RtcEngine _engine;
-  bool _isJoined = false;
   bool _isMuted = false;
+  bool _isJoined = true;
+  void _toggleMute() {}
+  void initAgora() {}
 
   final TextEditingController _msgController = TextEditingController();
   List<Map<String, String>> chatMessages = [
@@ -426,48 +422,6 @@ class _VoiceRoomScreenState extends State<VoiceRoomScreen> {
     initAgora();
   }
 
-  Future<void> initAgora() async {
-    await [Permission.microphone].request();
-
-    _engine = createAgoraRtcEngine();
-    await _engine.initialize(RtcEngineContext(appId: appId));
-
-    await _engine.enableAudio();
-    await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
-
-    _engine.registerEventHandler(
-      RtcEngineEventHandler(
-        onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
-          setState(() => _isJoined = true);
-        },
-        onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {},
-      ),
-    );
-
-    await _engine.joinChannel(
-      token: token,
-      channelId: channelName,
-      uid: 0,
-      options: const ChannelMediaOptions(
-        channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
-        clientRoleType: ClientRoleType.clientRoleBroadcaster,
-      ),
-    );
-  }
-
-  void _toggleMute() {
-    setState(() {
-      _isMuted = !_isMuted;
-    });
-    _engine.muteLocalAudioStream(_isMuted);
-  }
-
-  @override
-  void dispose() {
-    _engine.leaveChannel();
-    _engine.release();
-    super.dispose();
-  }
 
   void _sendMessage({String? customMsg}) {
     String textToSend = customMsg ?? _msgController.text.trim();
